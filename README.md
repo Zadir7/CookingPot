@@ -1,4 +1,4 @@
-# CookingPot
+# Cooking Pot
 OOP in Unity study project
 
 Идея прототипа: 
