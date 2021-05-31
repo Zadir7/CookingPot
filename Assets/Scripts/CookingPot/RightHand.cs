@@ -1,25 +1,26 @@
 using System;
+using CookingPot.Items;
 using UnityEngine;
 
 namespace CookingPot
 {
     public class RightHand : MonoBehaviour
     {
-        internal PlayerController _playerController;
+        internal PlayerController PlayerController;
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.TryGetComponent<Item>(out var item))
             {
-                _playerController.SetItemToPickup(true, item);
+                PlayerController.SetItemToPickup(true, item);
             }
         }
 
         private void OnTriggerExit(Collider other)
         {
-            if (_playerController.IsAbleToPickUp)
+            if (PlayerController.IsAbleToPickUp)
             {
-                _playerController.ResetPickupItem();
+                PlayerController.ResetPickupItem();
             }
         }
     }

@@ -10,7 +10,7 @@ namespace CookingPot
         [SerializeField] private Player player;
         [SerializeField] private RightHand rightHand;
 
-        private PlayerController playerController;
+        private PlayerController _playerController;
         
         private void Start()
         {
@@ -18,8 +18,8 @@ namespace CookingPot
             FixedUpdatables = new List<IFixedUpdatable>();
             LateUpdatables = new List<ILateUpdatable>();
 
-            playerController = new PlayerController(player, rightHand);
-            rightHand._playerController = playerController;
+            _playerController = new PlayerController(player, rightHand);
+            rightHand.PlayerController = _playerController;
         }
         
         private void Update()
