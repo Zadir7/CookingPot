@@ -18,6 +18,7 @@ namespace CookingPot
         public float CurrentHealth { get; set; }
 
         internal bool IsAbleToPickUp => _isAbleToPickUp;
+        internal bool HasItemInHand => _itemInHand != null;
 
         internal PlayerController(Player player, RightHand rightHand)
         {

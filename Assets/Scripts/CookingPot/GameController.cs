@@ -9,8 +9,11 @@ namespace CookingPot
     {
         [SerializeField] private Player player;
         [SerializeField] private RightHand rightHand;
+        [SerializeField] private float playerSpeed = 3.0f;
 
         private PlayerController _playerController;
+        private PlayerInputHandler _playerInputHandler;
+        private PlayerMoveHandler _playerMoveHandler;
         
         private void Start()
         {
@@ -20,6 +23,8 @@ namespace CookingPot
 
             _playerController = new PlayerController(player, rightHand);
             rightHand.PlayerController = _playerController;
+            _playerInputHandler = new PlayerInputHandler(_playerController);
+            _playerMoveHandler = new PlayerMoveHandler(player.transform, playerSpeed);
         }
         
         private void Update()

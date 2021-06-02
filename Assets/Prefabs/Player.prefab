@@ -119,6 +119,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7043770577569645396}
   - component: {fileID: 7043770577569645399}
+  - component: {fileID: 1883991390055281686}
   m_Layer: 0
   m_Name: RightHand
   m_TagString: Untagged
@@ -153,3 +154,15 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.8963331, y: 1, z: 1.0768106}
   m_Center: {x: 0.05183345, y: 0, z: 0.18907583}
+--- !u!114 &1883991390055281686
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7043770577569645397}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 755b383bb87241beb22e6730dd618a75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
