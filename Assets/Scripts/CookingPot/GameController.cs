@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CookingPot.Items;
 using CookingPot.Update;
 using UnityEngine;
 using static CookingPot.Update.UpdaterStatic;
@@ -10,10 +11,12 @@ namespace CookingPot
         [SerializeField] private Player player;
         [SerializeField] private RightHand rightHand;
         [SerializeField] private float playerSpeed = 3.0f;
+        [SerializeField] private Transform camera;
 
         private PlayerController _playerController;
         private PlayerInputHandler _playerInputHandler;
         private PlayerMoveHandler _playerMoveHandler;
+        private CameraController _cameraController;
         
         private void Start()
         {
@@ -25,6 +28,9 @@ namespace CookingPot
             rightHand.PlayerController = _playerController;
             _playerInputHandler = new PlayerInputHandler(_playerController);
             _playerMoveHandler = new PlayerMoveHandler(player.transform, playerSpeed);
+            _cameraController = new CameraController(player.transform, camera);
+
+            _playerController.OnItemUsed += LogIfItemIsUsed;
         }
         
         private void Update()
@@ -49,6 +55,12 @@ namespace CookingPot
             {
                 updatable.LateUpdate();
             }
+        }
+        
+        //temporary method
+        private void LogIfItemIsUsed(Item item)
+        {
+            Debug.Log(item);
         }
     }
 }

@@ -169,6 +169,7 @@ MonoBehaviour:
   player: {fileID: 642527828}
   rightHand: {fileID: 2066838929}
   playerSpeed: 3
+  camera: {fileID: 963194228}
 --- !u!114 &642527828 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7043770576276055207, guid: fe89ed96788264948874c5433d25fabe, type: 3}

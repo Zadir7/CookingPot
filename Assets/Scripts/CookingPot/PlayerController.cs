@@ -1,3 +1,4 @@
+using System;
 using CookingPot.Items;
 using CookingPot.Update;
 using UnityEngine;
@@ -14,11 +15,14 @@ namespace CookingPot
         private Item _itemInHand;
 
         private readonly float _healthDrainAmount = 1;
+        
+        internal bool IsAbleToPickUp => _isAbleToPickUp;
+        internal bool HasItemInHand => _itemInHand != null;
+        
         public float MaxHealth { get; set; }
         public float CurrentHealth { get; set; }
 
-        internal bool IsAbleToPickUp => _isAbleToPickUp;
-        internal bool HasItemInHand => _itemInHand != null;
+        public event Action<Item> OnItemUsed;
 
         internal PlayerController(Player player, RightHand rightHand)
         {
@@ -69,9 +73,11 @@ namespace CookingPot
             {
                 var itemTransform = _itemToPickup.transform;
                 var rightHandTransform = _rightHand.transform;
+                var itemRigidbody = _itemToPickup.gameObject.GetComponent<Rigidbody>();
                 
                 itemTransform.position = rightHandTransform.position;
                 itemTransform.parent = rightHandTransform;
+                itemRigidbody.useGravity = false;
                 _itemInHand = _itemToPickup;
                 ResetPickupItem();
             }
@@ -79,13 +85,14 @@ namespace CookingPot
 
         internal void UseItem()
         {
-            if (_itemInHand == null)
+            if (_itemInHand is null)
             {
                 return;
             }
-            if (_itemInHand is Edible)
+            if (_itemInHand is Edible edible)
             {
-                (_itemInHand as Edible)?.Use(this);
+                edible.Use(this);
+                OnItemUsed?.Invoke(edible);
             }
         }
         

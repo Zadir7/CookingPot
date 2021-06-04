@@ -14,6 +14,7 @@ namespace CookingPot.Items
         public override void Use(IHealth health)
         {
             health?.RestoreHealth(HealthAmount);
+            Destroy(gameObject);
         }
     }
 }
