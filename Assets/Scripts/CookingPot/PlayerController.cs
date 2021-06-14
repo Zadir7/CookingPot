@@ -2,6 +2,7 @@ using System;
 using CookingPot.Items;
 using CookingPot.Update;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace CookingPot
 {
@@ -22,27 +23,33 @@ namespace CookingPot
         public float MaxHealth { get; set; }
         public float CurrentHealth { get; set; }
 
-        public event Action<Item> OnItemUsed;
+        public event Action OnPlayerDeath = () => { };
 
         internal PlayerController(Player player, RightHand rightHand)
         {
             this._player = player;
             this._rightHand = rightHand;
+            MaxHealth = 100.0f;
+            CurrentHealth = 100.0f;
+            UpdaterStatic.AddToUpdatables(this);
         }
 
         public void Update()
         {
-            DrainHealth(_healthDrainAmount * Time.deltaTime);
+            if (CurrentHealth <= 0)
+            {
+                CurrentHealth = 0;
+                OnPlayerDeath.Invoke();
+            }
+            else
+            {
+                DrainHealth(_healthDrainAmount * Time.deltaTime);
+            }
         }
 
         private void DrainHealth(float amount)
         {
             CurrentHealth -= amount;
-            Debug.Log(CurrentHealth);
-            if (CurrentHealth <= 0)
-            {
-                GameObject.Destroy(_player);
-            }
         }
         public void RestoreHealth(float amount)
         {
@@ -92,7 +99,6 @@ namespace CookingPot
             if (_itemInHand is Edible edible)
             {
                 edible.Use(this);
-                OnItemUsed?.Invoke(edible);
             }
         }
         
