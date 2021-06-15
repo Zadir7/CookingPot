@@ -12,11 +12,14 @@ namespace CookingPot
         [SerializeField] private RightHand rightHand;
         [SerializeField] private float playerSpeed = 3.0f;
         [SerializeField] private Transform camera;
+        [SerializeField] private GameObject endGameLabel;
+        [SerializeField] private GameObject currentHpLabel;
 
         private PlayerController _playerController;
         private PlayerInputHandler _playerInputHandler;
         private PlayerMoveHandler _playerMoveHandler;
         private CameraController _cameraController;
+        private CurrentHpLabel _currentHpLabel;
         
         private void Start()
         {
@@ -30,7 +33,9 @@ namespace CookingPot
             _playerMoveHandler = new PlayerMoveHandler(player.transform, playerSpeed);
             _cameraController = new CameraController(player.transform, camera);
 
-            _playerController.OnItemUsed += LogIfItemIsUsed;
+            _currentHpLabel = new CurrentHpLabel(currentHpLabel, _playerController);
+
+            _playerController.OnPlayerDeath += EndGame;
         }
         
         private void Update()
@@ -56,11 +61,17 @@ namespace CookingPot
                 updatable.LateUpdate();
             }
         }
-        
-        //temporary method
-        private void LogIfItemIsUsed(Item item)
+
+        private void EndGame()
         {
-            Debug.Log(item);
+            RemoveFromUpdatables(_playerController);
+            RemoveFromUpdatables(_playerInputHandler);
+            RemoveFromUpdatables(_playerMoveHandler);
+            RemoveFromUpdatables(_cameraController);
+            Destroy(player.gameObject);
+            player = null;
+            _currentHpLabel.Disable();
+            var endGameView = new EndGameView(endGameLabel);
         }
     }
 }
