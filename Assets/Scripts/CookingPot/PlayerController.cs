@@ -24,6 +24,7 @@ namespace CookingPot
         public float CurrentHealth { get; set; }
 
         public event Action OnPlayerDeath = () => { };
+        public event Action OnHealthDrain = () => { };
 
         internal PlayerController(Player player, RightHand rightHand)
         {
@@ -50,6 +51,7 @@ namespace CookingPot
         private void DrainHealth(float amount)
         {
             CurrentHealth -= amount;
+            OnHealthDrain();
         }
         public void RestoreHealth(float amount)
         {

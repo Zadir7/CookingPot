@@ -4,7 +4,11 @@ namespace CookingPot.Items
 {
     public class Food : Edible
     {
-        [SerializeField] private float healthAmount;
+        [SerializeField] 
+        [Range(1, 10)]
+        [Tooltip("Количество здоровья, восстанавливаемое едой")]
+        private float healthAmount;
+        
         public override float HealthAmount 
         { 
             get => healthAmount;

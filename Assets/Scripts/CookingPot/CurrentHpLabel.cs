@@ -4,28 +4,29 @@ using UnityEngine.UI;
 
 namespace CookingPot
 {
-    internal sealed class CurrentHpLabel : IUpdatable
+    internal sealed class CurrentHpLabel
     {
         private const string CurrentHp = "Текущее здоровье";
         private readonly Text _currentHpLabel;
-        private readonly IHealth _playerHealth;
+        private readonly PlayerController _playerController;
 
-        public CurrentHpLabel(GameObject currentHpVisual, IHealth playerHealth)
+        public CurrentHpLabel(GameObject currentHpVisual, PlayerController playerController)
         {
-            _playerHealth = playerHealth;
+            _playerController = playerController;
             _currentHpLabel = currentHpVisual.GetComponent<Text>();
             _currentHpLabel.color = Color.red;
-            UpdaterStatic.AddToUpdatables(this);
+            playerController.OnHealthDrain += ChangeLabel;
         }
 
-        public void Update()
+        private void ChangeLabel()
         {
-            _currentHpLabel.text = $"{CurrentHp}: {_playerHealth.CurrentHealth:000}";
+            _currentHpLabel.text = $"{CurrentHp}: {_playerController.CurrentHealth:000}";
         }
 
         internal void Disable()
         {
             _currentHpLabel.enabled = false;
+            _playerController.OnHealthDrain -= ChangeLabel;
         }
     }
 }

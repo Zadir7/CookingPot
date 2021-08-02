@@ -8,12 +8,25 @@ namespace CookingPot
 {
     internal sealed class GameController : MonoBehaviour
     {
-        [SerializeField] private Player player;
-        [SerializeField] private RightHand rightHand;
-        [SerializeField] private float playerSpeed = 3.0f;
-        [SerializeField] private Transform camera;
-        [SerializeField] private GameObject endGameLabel;
-        [SerializeField] private GameObject currentHpLabel;
+        [SerializeField] 
+        [Tooltip("Объект игрока")]
+        private Player player;
+        
+        [SerializeField] 
+        private RightHand rightHand;
+        
+        [SerializeField] 
+        [Tooltip("Начальная скорость игрока")]
+        private float playerSpeed = 3.0f;
+        
+        [SerializeField] 
+        private Transform camera;
+        
+        [SerializeField] 
+        private GameObject endGameLabel;
+        
+        [SerializeField] 
+        private GameObject currentHpLabel;
 
         private PlayerController _playerController;
         private PlayerInputHandler _playerInputHandler;
